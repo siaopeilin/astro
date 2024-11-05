@@ -1,20 +1,7 @@
 ---
-const nav = [
-  {
-    href: "/",
-    label: "ホーム",
-  },
-  {
-    href: "/company",
-    label: "会社情報",
-  },
-  {
-    href: "/contact",
-    label: "お問い合わせ",
-  },
-];
-
-const active = "/company";
+import { getBlogs } from "../library/microcms";
+const res = await getBlogs();
+console.log(res);
 ---
 
 <!doctype html>
@@ -22,43 +9,18 @@ const active = "/company";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ナビゲーション</title>
+    <title>Blog</title>
   </head>
+
   <body>
-    <h1>ナビゲーション</h1>
-    <nav>
-      <ul>
-        {
-          nav.map((e) => (
-            <li class:list={[e.href === active && "is-active"]}>
-              <a href={e.href}>{e.label}</a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+    <ul>
+      {
+        res.contents.map((post) => (
+          <li>
+            <a href={post.id}>{post.title}</a>
+          </li>
+        ))
+      }
+    </ul>
   </body>
 </html>
-
-<style lang="scss">
-  nav {
-    ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      gap: 1em;
-      a {
-        color: #000;
-        text-decoration: none;
-      }
-      li.is-active {
-        background: #000;
-        a {
-          color: #fff;
-          padding: 0 5px;
-        }
-      }
-    }
-  }
-</style>
